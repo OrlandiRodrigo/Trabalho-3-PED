@@ -1,0 +1,83 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 04.04.2022 16:47:13
+-- Design Name: 
+-- Module Name: Main - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity Main is
+    Port ( selecao : in STD_LOGIC_VECTOR (1 downto 0);
+           a : in STD_LOGIC_VECTOR (3 downto 0);
+           b : in STD_LOGIC_VECTOR (3 downto 0);
+           outS : out STD_LOGIC_VECTOR (6 downto 0));
+         
+end Main;
+
+architecture Behavioral of Main is
+    component mux
+    Port (sel : in STD_LOGIC_VECTOR (1 DOWNTO 0);
+          numA : in STD_LOGIC_VECTOR (3 DOWNTO 0);
+          numB : in STD_LOGIC_VECTOR (3 DOWNTO 0);
+          numS : out STD_LOGIC_VECTOR (3 DOWNTO 0));
+     end component;
+     
+     component bcd
+     Port (bit1 : in STD_LOGIC;
+           bit2 : in STD_LOGIC;
+           bit3 : in STD_LOGIC;
+           bit4 : in STD_LOGIC;
+           out1 : out STD_LOGIC;
+           out2 : out STD_LOGIC;
+           out3 : out STD_LOGIC;
+           out4 : out STD_LOGIC;
+           out5 : out STD_LOGIC;
+           out6 : out STD_LOGIC;
+           out7 : out STD_LOGIC);     
+     end component;
+     
+
+  signal touta1, touta2, touta3, touta4, touta5, touta6, touta7, toutb1, toutb2, toutb3, toutb4, toutb5, toutb6, toutb7: STD_LOGIC;
+  signal an: STD_LOGIC_VECTOR (3 downto 0);
+  signal numEscolhido: STD_LOGIC_VECTOR (3 downto 0);
+begin
+
+       mux2ent: mux port map(numA => a, numB => b, sel => selecao, numS => numEscolhido);
+      
+       
+       
+       codigoBCD: bcd port map(bit4 => numEscolhido(3) ,bit3 => numEscolhido(2), bit2 => numEscolhido(1), bit1 => numEscolhido(0), out1 => outS(0), out2 => outS(1),out3 => outS(2), out4 => outS(3), out5 => outS(4), out6 => outS(5), out7 => outS(6));
+       
+       an <= "1111";
+       
+       an(0)<= '0' WHEN selecao = "1" ELSE
+               '1';
+       an(1)<= '0' WHEN selecao = "0" ELSE
+               '1';
+
+end Behavioral;
