@@ -44,3 +44,7 @@ begin
 
     numS <= numB WHEN sel = "00" ELSE
             numA WHEN sel = "01";
+
+
+
+end Behavioral;
