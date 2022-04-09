@@ -43,8 +43,4 @@ architecture Behavioral of mux is
 begin
 
     numS <= numB WHEN sel = "00" ELSE
-               numA WHEN sel = "01";
-
-
-
-end Behavioral;
+            numA WHEN sel = "01";
