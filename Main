@@ -47,22 +47,12 @@ architecture Behavioral of Main is
           numS : out STD_LOGIC_VECTOR (3 DOWNTO 0));
      end component;
      
-     component bcd
-     Port (bit1 : in STD_LOGIC;
-           bit2 : in STD_LOGIC;
-           bit3 : in STD_LOGIC;
-           bit4 : in STD_LOGIC;
-           out1 : out STD_LOGIC;
-           out2 : out STD_LOGIC;
-           out3 : out STD_LOGIC;
-           out4 : out STD_LOGIC;
-           out5 : out STD_LOGIC;
-           out6 : out STD_LOGIC;
-           out7 : out STD_LOGIC);     
+     component bcd_7_componentes
+     Port (entradas : in STD_LOGIC_VECTOR (3 downto 0);
+           outbcd: out STD_LOGIC_VECTOR (6 downto 0));     
      end component;
      
 
-  signal touta1, touta2, touta3, touta4, touta5, touta6, touta7, toutb1, toutb2, toutb3, toutb4, toutb5, toutb6, toutb7: STD_LOGIC;
   signal an: STD_LOGIC_VECTOR (3 downto 0);
   signal numEscolhido: STD_LOGIC_VECTOR (3 downto 0);
 begin
@@ -71,7 +61,8 @@ begin
       
        
        
-       codigoBCD: bcd port map(bit4 => numEscolhido(3) ,bit3 => numEscolhido(2), bit2 => numEscolhido(1), bit1 => numEscolhido(0), out1 => outS(0), out2 => outS(1),out3 => outS(2), out4 => outS(3), out5 => outS(4), out6 => outS(5), out7 => outS(6));
+       seteSegmentos: bcd_7_componentes port map(entradas => numEscolhido,
+                               outbcd => outS);
        
        an <= "1111";
        
