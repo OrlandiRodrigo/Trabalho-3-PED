@@ -31,42 +31,33 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity BCD_7_Seg is
-    Port ( bit1 : in STD_LOGIC;
-           bit2 : in STD_LOGIC;
-           bit3 : in STD_LOGIC;
-           bit4 : in STD_LOGIC;
-           out1 : out STD_LOGIC;
-           out2 : out STD_LOGIC;
-           out3 : out STD_LOGIC;
-           out4 : out STD_LOGIC;
-           out5 : out STD_LOGIC;
-           out6 : out STD_LOGIC;
-           out7 : out STD_LOGIC);
-end BCD_7_Seg;
+entity bcd_7_componentes is
+    Port ( entradas : in STD_LOGIC_VECTOR (3 downto 0);
+           outbcd: out STD_LOGIC_VECTOR (6 downto 0));
+end bcd_7_componentes;
 
-architecture Behavioral of BCD_7_Seg is
- signal digito: STD_LOGIC_VECTOR (8 downto 0);
+architecture Behavioral of bcd_7_componentes is
+ signal digito: STD_LOGIC_VECTOR (9 downto 0);
 
 begin
-    digito(0) <= not bit4 and not bit3 and not bit2 and not bit1;
-    digito(1) <= not bit4 and not bit3 and not bit2 and bit1;
-    digito(2) <= not bit4 and not bit3 and bit2 and not bit1;
-    digito(3) <= not bit4 and not bit3 and bit2 and bit1;
-    digito(4) <= not bit4 and bit3 and not bit2 and not bit1;
-    digito(5) <= not bit4 and bit3 and not bit2 and bit1;
-    digito(6) <= not bit4 and bit3 and bit2 and not bit1;
-    digito(7) <= not bit4 and bit3 and bit2 and bit1;
-    digito(8) <= bit4 and not bit3 and not bit2 and not bit1;
-    digito(9) <= bit4 and not bit3 and not bit2 and bit1;
+    digito(0) <= not entradas(3) and not entradas(2) and not entradas(1) and not entradas(0);
+    digito(1) <= not entradas(3) and not entradas(2) and not entradas(1) and entradas(0);
+    digito(2) <= not entradas(3) and not entradas(2) and entradas(1) and not entradas(0);
+    digito(3) <= not entradas(3) and not entradas(2) and entradas(1) and entradas(0);
+    digito(4) <= not entradas(3) and entradas(2) and not entradas(1) and not entradas(0);
+    digito(5) <= not entradas(3) and entradas(2) and not entradas(1) and entradas(0);
+    digito(6) <= not entradas(3) and entradas(2) and entradas(1) and not entradas(0);
+    digito(7) <= not entradas(3) and entradas(2) and entradas(1) and entradas(0);
+    digito(8) <= entradas(3) and not entradas(2) and not entradas(1) and not entradas(0);
+    digito(9) <= entradas(3) and not entradas(2) and not entradas(1) and entradas(0);
     
-    out1 <= digito(0) or digito(2) or digito(3) or digito(5) or digito(6) or digito(7) or digito(8) or digito(9);
-    out2 <= digito(0) or digito(1) or digito(2) or digito(3) or digito(4) or digito(7) or digito(8) or digito(9);
-    out3 <= digito(0) or digito(1) or digito(3) or digito(4) or digito(5) or digito(6) or digito(7) or digito(8) or digito(9);
-    out4 <= digito(0) or digito(2) or digito(3) or digito(5) or digito(6) or digito(8) or digito(9);
-    out5 <= digito(0) or digito(2) or digito(6) or digito(8);
-    out6 <= digito(0) or digito(4) or digito(5) or digito(6) or digito(8) or digito(9);
-    out7 <= digito(2) or digito(3) or digito(4) or digito(5) or digito(6) or digito(8) or digito(9);
+    outbcd(0) <= digito(0) or digito(2) or digito(3) or digito(5) or digito(6) or digito(7) or digito(8) or digito(9);
+    outbcd(1) <= digito(0) or digito(1) or digito(2) or digito(3) or digito(4) or digito(7) or digito(8) or digito(9);
+    outbcd(2) <= digito(0) or digito(1) or digito(3) or digito(4) or digito(5) or digito(6) or digito(7) or digito(8) or digito(9);
+    outbcd(3) <= digito(0) or digito(2) or digito(3) or digito(5) or digito(6) or digito(8) or digito(9);
+    outbcd(4) <= digito(0) or digito(2) or digito(6) or digito(8);
+    outbcd(5) <= digito(0) or digito(4) or digito(5) or digito(6) or digito(8) or digito(9);
+    outbcd(6) <= digito(2) or digito(3) or digito(4) or digito(5) or digito(6) or digito(8) or digito(9);
 
    
    
