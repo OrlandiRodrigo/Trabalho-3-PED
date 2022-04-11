@@ -1,0 +1,65 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+
+entity Mux_7seg_MAIN is
+    Port ( bcd_unidades : in STD_LOGIC_VECTOR (3 downto 0);
+           bcd_dezenas : in STD_LOGIC_VECTOR (3 downto 0);
+           clk : in STD_LOGIC;
+           an : out STD_LOGIC_VECTOR (3 downto 0);
+           seg : out STD_LOGIC_VECTOR (6 downto 0);
+           dp : out STD_LOGIC);
+end Mux_7seg_MAIN;
+
+
+architecture Behavioral of Mux_7seg_MAIN is
+    
+    component bcd_7seg 
+    Port ( entradas : in STD_LOGIC_VECTOR (3 downto 0);
+           outbcd: out STD_LOGIC_VECTOR (6 downto 0));
+    end component;
+
+    signal clk_apropriado: STD_LOGIC:= '0';
+    signal contador: integer range 1 to 100_000 := 1;
+    signal escolher_display: integer range 1 to 4 := 1;
+    signal s_an, bcd_now: STD_LOGIC_VECTOR (3 downto 0);
+
+begin
+    
+
+    divisor_clk: process(clk)
+    begin
+        if rising_edge(clk) then
+            if contador = 100_000 then
+                contador <= 1; 
+                clk_apropriado <= not clk_apropriado;
+                else
+                    contador <= contador + 1;
+            end if;
+        
+        end if;
+     end process;
+     
+     
+     multiplexando: process(clk_apropriado)
+     begin
+       
+        if rising_edge(clk_apropriado)then
+            case escolher_display is
+                when 1 => s_an <= "1110"; bcd_now <= bcd_unidades;
+                when 2 => s_an <= "1101"; bcd_now <= bcd_dezenas;
+                when 3 => s_an <= "1111";
+                when 4 => s_an <= "1111";
+                when others => null;
+            end case;         
+         
+            escolher_display <= escolher_display + 1;
+        end if;
+     
+     end process;
+    
+    an <= s_an;
+    usando_bcd: bcd_7seg port map(entradas => bcd_now, outbcd => seg);
+    dp <= '1';
+    
+end Behavioral;
