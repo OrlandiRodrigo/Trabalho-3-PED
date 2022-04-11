@@ -1,0 +1,38 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+
+entity bcd_7seg is
+    Port ( entradas : in STD_LOGIC_VECTOR (3 downto 0);
+           outbcd: out STD_LOGIC_VECTOR (6 downto 0));
+end bcd_7seg;
+
+architecture Behavioral of bcd_7seg is
+ signal digito: STD_LOGIC_VECTOR (9 downto 0);
+
+begin
+
+
+
+    digito(0) <= not entradas(3) and not entradas(2) and not entradas(1) and not entradas(0);
+    digito(1) <= not entradas(3) and not entradas(2) and not entradas(1) and entradas(0);
+    digito(2) <= not entradas(3) and not entradas(2) and entradas(1) and not entradas(0);
+    digito(3) <= not entradas(3) and not entradas(2) and entradas(1) and entradas(0);
+    digito(4) <= not entradas(3) and entradas(2) and not entradas(1) and not entradas(0);
+    digito(5) <= not entradas(3) and entradas(2) and not entradas(1) and entradas(0);
+    digito(6) <= not entradas(3) and entradas(2) and entradas(1) and not entradas(0);
+    digito(7) <= not entradas(3) and entradas(2) and entradas(1) and entradas(0);
+    digito(8) <= entradas(3) and not entradas(2) and not entradas(1) and not entradas(0);
+    digito(9) <= entradas(3) and not entradas(2) and not entradas(1) and entradas(0);
+    
+    outbcd(0) <= digito(0) or digito(2) or digito(3) or digito(5) or digito(6) or digito(7) or digito(8) or digito(9);
+    outbcd(1) <= digito(0) or digito(1) or digito(2) or digito(3) or digito(4) or digito(7) or digito(8) or digito(9);
+    outbcd(2) <= digito(0) or digito(1) or digito(3) or digito(4) or digito(5) or digito(6) or digito(7) or digito(8) or digito(9);
+    outbcd(3) <= digito(0) or digito(2) or digito(3) or digito(5) or digito(6) or digito(8) or digito(9);
+    outbcd(4) <= digito(0) or digito(2) or digito(6) or digito(8);
+    outbcd(5) <= digito(0) or digito(4) or digito(5) or digito(6) or digito(8) or digito(9);
+    outbcd(6) <= digito(2) or digito(3) or digito(4) or digito(5) or digito(6) or digito(8) or digito(9);
+
+   
+   
+end Behavioral;
